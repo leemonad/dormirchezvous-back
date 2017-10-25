@@ -1,0 +1,39 @@
+Mini-cahier déchargé
+
+V1
+
+Création d'utilisateur :
+    - Compte FI
+    - Ajouter des infos de contact, visibles lors de la "postulation" à une annonce
+
+Un utilisateur peut :
+  - Déposer une annonce dans un évènement déverouillé
+    - Description
+    - Nombre de places disponibles
+  - Accepter/Rejeter une postulation à une annonce
+    - L'utilisateur peut voir le message associé à la postulation et les infos de contact du postulant
+  - Supprimer une annonce
+  - Postuler à une annonce
+    - Une postulation = un message + partage d'infos de contact à l'annonceur
+  - Visionner ses postulations actives
+
+Alertes E-mail :
+  - Lorsqu'un utilisateur postule à son annonce
+  - Lorsqu'une postulation est acceptée/rejetée
+  - Lorsqu'une annonce auquel l'utilisateur a postulé est rejeté
+
+V2
+
+Un administrateur peut :
+  - Créer un évènement
+  - Verouiller/Déverouiller un évènement
+  - Supprimer un évènement
+
+Un utilisateur peut : 
+  - Rejeter une postulation après qu'elle ait été acceptée
+  - Annuler une postulation
+
+
+V3
+
+Système de messagerie interne
