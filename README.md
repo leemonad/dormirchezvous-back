@@ -1,9 +1,7 @@
-# Le projet repose sur une base typescript + express (dernières versions stables)
-# il faut dans un premier temps installer typescript à l'aide la commande npm install -g typescript
-# puis ensuite lancer un petit coup de npm install
-# et enfin pour compiler et démarrer le serveur node.js
+Le projet repose sur une base typescript + express (dernières versions stables)
 
-# 1°) invoquer "tsc "
-# 2°) node ./build/server.js
+- npm install
+- npm run build
+- npm serve
 
-# et voilà la serveur est démarré \ o /
+Et rendez-vous sur http://localhost:3000

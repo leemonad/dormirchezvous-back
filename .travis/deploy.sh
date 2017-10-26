@@ -3,6 +3,5 @@ eval "$(ssh-agent -s)"
 chmod 600 /tmp/deploy_rsa
 ssh-add /tmp/deploy_rsa
 
-npm run build
-
-rsync -e ssh -avz --delete-after $TRAVIS_BUILD_DIR/build dormirchezvous@163.172.60.184:/home/insoumis/sites/dormirchezvous/dev/back
+git remote add deploy ssh://dormirchezvous@163.172.60.184:/home/insoumis/sites/dormirchezvous/dev/deploy.git
+git push deploy master
