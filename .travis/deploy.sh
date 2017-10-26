@@ -5,3 +5,4 @@ ssh-add /tmp/deploy_rsa
 
 git remote add deploy ssh://dormirchezvous@163.172.60.184:/home/insoumis/sites/dormirchezvous/dev/deploy.git
 git push deploy master
+
