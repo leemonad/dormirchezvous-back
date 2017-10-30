@@ -1,0 +1,120 @@
+<html>
+<script type="text/javascript">
+
+    function getUserData() {
+        var id = parseInt(document.getElementById("event_id").value);
+        var locked = parseInt(document.getElementById("event_locked").value);
+        var name = document.getElementById("event_name").value;
+
+        return { id: id, locked: locked, name: name };
+    }
+
+    function update(){
+        var data = getUserData();
+        var url = "http://localhost:3000/events/"+data.id;
+        var xhr = new XMLHttpRequest();
+
+        
+        xhr.open("PUT", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+        xhr.onreadystatechange = function () {
+            if (xhr.status == 200 && xhr.readyState == 4) {
+                document.getElementById("results").innerText = xhr.responseText;
+            }
+        }
+
+        xhr.send(JSON.stringify(data));
+    }
+
+    function add(){
+        var data = getUserData();
+        var url = "http://localhost:3000/events";
+        var xhr = new XMLHttpRequest();
+
+        
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+        xhr.onreadystatechange = function () {
+            if (xhr.status == 200 && xhr.readyState == 4) {
+                document.getElementById("results").innerText = xhr.responseText;
+            }
+        }
+
+        xhr.send(JSON.stringify(data));
+    }
+
+    function remove() {
+
+        var data = getUserData();
+        var url = "http://localhost:3000/events/" + data.id;
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("DELETE", url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.status == 200 && xhr.readyState == 4) {
+                document.getElementById("results").innerText = xhr.responseText;
+            }
+        }
+
+        xhr.send();
+    }
+
+    function doGet() {
+        var url = "http://localhost:3000/events";
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.status == 200 && xhr.readyState == 4) {
+                document.getElementById("results").innerText = xhr.responseText;
+            }
+        }
+
+        xhr.send();
+    }
+
+    function doGetOne() {
+        var data = getUserData();
+        var url = "http://localhost:3000/events/"+data.id;
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.status == 200 && xhr.readyState == 4) {
+                document.getElementById("results").innerText = xhr.responseText;
+            }
+        }
+
+        xhr.send();
+    }
+
+</script>
+
+<body>
+    <div>
+        <label>id</label>
+        <input type="text" name="event_id" id="event_id" value="0" />
+        <br />
+
+
+        <label>locked</label>
+        <input type="text" name="event_locked" id="event_locked" value="0" />
+        <br />
+
+
+        <label>name</label>
+        <input type="text" name="event_name" id="event_name" value="no_name" />
+        <br />
+
+        <button onclick="update()">UPDATE</button>
+        <button onclick="add()">ADD</button>
+        <button onclick="remove()">REMOVE</button>
+        <button onclick="doGetOne()">GET</button>
+        <button onclick="doGet()">GET ALL</button>
+    </div>
+    <div id="results"></div>
+
+
+</body>
+
+</html>

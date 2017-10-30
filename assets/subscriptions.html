@@ -1,0 +1,126 @@
+<html>
+<script type="text/javascript">
+
+    function getUserData() {
+        var id          = parseInt(document.getElementById("sub_id").value);
+        var approved    = parseInt(document.getElementById("sub_approved").value);
+        var msg         = document.getElementById("sub_msg").value;
+        var announce_id = document.getElementById("sub_announce_id").value;
+
+        return { id: id, approved: approved, msg: msg, announce_id: announce_id };
+    }
+
+    function update(){
+        var data = getUserData();
+        var url = "http://localhost:3000/subscriptions/"+data.id;
+        var xhr = new XMLHttpRequest();
+
+        
+        xhr.open("PUT", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+        xhr.onreadystatechange = function () {
+            if (xhr.status == 200 && xhr.readyState == 4) {
+                document.getElementById("results").innerText = xhr.responseText;
+            }
+        }
+
+        xhr.send(JSON.stringify(data));
+    }
+
+    function add(){
+        var data = getUserData();
+        var url = "http://localhost:3000/subscriptions";
+        var xhr = new XMLHttpRequest();
+
+        
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+        xhr.onreadystatechange = function () {
+            if (xhr.status == 200 && xhr.readyState == 4) {
+                document.getElementById("results").innerText = xhr.responseText;
+            }
+        }
+
+        xhr.send(JSON.stringify(data));
+    }
+
+    function remove() {
+
+        var data = getUserData();
+        var url = "http://localhost:3000/subscriptions/" + data.id;
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("DELETE", url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.status == 200 && xhr.readyState == 4) {
+                document.getElementById("results").innerText = xhr.responseText;
+            }
+        }
+
+        xhr.send();
+    }
+
+    function doGet() {
+        var url = "http://localhost:3000/subscriptions";
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.status == 200 && xhr.readyState == 4) {
+                document.getElementById("results").innerText = xhr.responseText;
+            }
+        }
+
+        xhr.send();
+    }
+
+    function doGetOne() {
+        var data = getUserData();
+        var url = "http://localhost:3000/subscriptions/"+data.id;
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.status == 200 && xhr.readyState == 4) {
+                document.getElementById("results").innerText = xhr.responseText;
+            }
+        }
+
+        xhr.send();
+    }
+
+</script>
+
+<body>
+    <div>
+        <label>id</label>
+        <input type="text" name="sub_id" id="sub_id" value="0" />
+        <br />
+
+
+        <label>approved</label>
+        <input type="text" name="sub_approved" id="sub_approved" value="0" />
+        <br />
+
+        
+        <label>announce id</label>
+        <input type="text" name="sub_announce_id" id="sub_announce_id" value="0" />
+        <br />
+
+
+        <label>msg</label>
+        <textarea name="sub_msg" id="sub_msg" value="no_msg"></textarea>
+        <br />
+
+        <button onclick="update()">UPDATE</button>
+        <button onclick="add()">ADD</button>
+        <button onclick="remove()">REMOVE</button>
+        <button onclick="doGetOne()">GET</button>
+        <button onclick="doGet()">GET ALL</button>
+    </div>
+    <div id="results"></div>
+
+
+</body>
+
+</html>
