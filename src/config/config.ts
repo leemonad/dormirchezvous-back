@@ -1,7 +1,7 @@
 export const MYSQL_CONFIG: Object = {
     host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'insoumniaque',
+    user: 'dormirchezvous',
+    password: 'dormirchezvous',
+    database: 'dormirchezvous',
     connectionLimit: 50
 };
