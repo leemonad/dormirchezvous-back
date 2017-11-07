@@ -9,6 +9,16 @@
         return { id: id, locked: locked, name: name };
     }
 
+    function nextToken(source){
+        var obj = JSON.parse(source); 
+        token = obj.token;
+        document.getElementById("custom_token").value = obj.token;
+    }
+
+    function setToken(){
+        token = document.getElementById("custom_token").value;
+    }
+
     function update(){
         var data = getUserData();
         var url = "http://localhost:3000/events/"+data.id;
@@ -20,6 +30,7 @@
         xhr.onreadystatechange = function () {
             if (xhr.status == 200 && xhr.readyState == 4) {
                 document.getElementById("results").innerText = xhr.responseText;
+                nextToken(xhr.responseText);
             }
         }
 
@@ -37,6 +48,7 @@
         xhr.onreadystatechange = function () {
             if (xhr.status == 200 && xhr.readyState == 4) {
                 document.getElementById("results").innerText = xhr.responseText;
+                nextToken(xhr.responseText);
             }
         }
 
@@ -53,6 +65,7 @@
         xhr.onreadystatechange = function () {
             if (xhr.status == 200 && xhr.readyState == 4) {
                 document.getElementById("results").innerText = xhr.responseText;
+                nextToken(xhr.responseText);
             }
         }
 
@@ -67,6 +80,7 @@
         xhr.onreadystatechange = function () {
             if (xhr.status == 200 && xhr.readyState == 4) {
                 document.getElementById("results").innerText = xhr.responseText;
+                nextToken(xhr.responseText);
             }
         }
 
@@ -82,6 +96,7 @@
         xhr.onreadystatechange = function () {
             if (xhr.status == 200 && xhr.readyState == 4) {
                 document.getElementById("results").innerText = xhr.responseText;
+                nextToken(xhr.responseText);
             }
         }
 
@@ -91,6 +106,12 @@
 </script>
 
 <body>
+    <div>
+        <label>set token: </label>
+        <input type="text" value="" id="custom_token"/>
+        <button onclick="setToken()">set token</button>
+        <br/ ><br/ ><br/ ><br/ >
+    </div>
     <div>
         <label>id</label>
         <input type="text" name="event_id" id="event_id" value="0" />

@@ -1,3 +1,5 @@
+import {OK} from "../config/app.constants";
+
 export class HomeController {
 
     static create(req: any, res: any): HomeController {
@@ -6,6 +8,6 @@ export class HomeController {
 
     constructor(req: any, res: any) {
         res.setHeader("Content-Type", "application/json");
-        res.send(200, JSON.stringify({ msg: "It works" }));
+        res.send(200, JSON.stringify(OK));
     }
 }

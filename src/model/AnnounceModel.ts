@@ -12,9 +12,9 @@ export class AnnounceModel {
     constructor() { }
 
     // do some update stuff
-    public update(p_vo: AnnounceVO): void 
+    public update(p_vo: AnnounceVO): Promise<any> 
     {
-        Database.getInstance().query(
+        return Database.getInstance().query(
             "UPDATE announces SET description=?, event_id=?, num_places=?, user_id=? WHERE id=?",
             [
                 p_vo.description,
@@ -26,9 +26,9 @@ export class AnnounceModel {
         );
     }
 
-    public add(p_vo: AnnounceVO): void 
+    public add(p_vo: AnnounceVO): Promise<any> 
     {
-        Database.getInstance().query(
+        return Database.getInstance().query(
             "INSERT INTO announces (description, event_id, num_places, user_id) VALUES(?, ?, ?, ?)",
             [
                 p_vo.description,
@@ -39,9 +39,9 @@ export class AnnounceModel {
         );
     }
 
-    public remove(p_id: number): void 
+    public remove(p_id: number): Promise<any> 
     {
-        Database.getInstance().query(
+        return Database.getInstance().query(
             "DELETE FROM announces WHERE id=?", [p_id]
         );
     }
@@ -60,18 +60,7 @@ export class AnnounceModel {
         return Database.getInstance().query("SELECT * FROM announces", []).then(
 
             (rows: Array<any>) => {
-
-                const results: AnnounceVO[] = new Array<AnnounceVO>();
-                const max: number = rows.length;
-                let vo: AnnounceVO = null;
-                let i: number = 0;
-
-                for (i = 0; i < max; i++) {
-                    vo = rows[i] as AnnounceVO;
-                    results.push(vo);
-                }
-
-                return results;
+                return rows as AnnounceVO[];
             }
 
         );

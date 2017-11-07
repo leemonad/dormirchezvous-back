@@ -33,23 +33,31 @@ export class Database{
                     
                     ( error:mysql.MysqlError, connection:mysql.PoolConnection) => {
         
-                        connection.query( 
-                            p_sql, 
-                            p_values,
-
-                            (error:mysql.MysqlError, results:Array<any>, fields:mysql.FieldInfo[]) => {
-                                if( error ) 
-                                {
-                                    reject(error);
+                        if( error )
+                        {
+                            reject(error);
+                        }
+                        else
+                        {
+                            connection.query( 
+                                p_sql, 
+                                p_values,
+    
+                                (error:mysql.MysqlError, results:Array<any>, fields:mysql.FieldInfo[]) => {
+                                    if( error ) 
+                                    {
+                                        reject(error);
+                                    }
+                                    else
+                                    {
+                                        resolve(results);
+                                    }
+                                        
+                                    connection.release();
                                 }
-                                else
-                                {
-                                    resolve(results);
-                                }
-                                    
-                                connection.release();
-                            }
-                        );
+                            );
+                        }
+                        
         
                     }
                 );

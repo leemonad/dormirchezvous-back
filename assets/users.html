@@ -1,6 +1,16 @@
 <html>
 <script type="text/javascript">
 
+    function nextToken(source){
+        var obj = JSON.parse(source); 
+        token = obj.token;
+        document.getElementById("custom_token").value = obj.token;
+    }
+
+    function setToken(){
+        token = document.getElementById("custom_token").value;
+    }
+
     function getUserData() {
         var id      = parseInt(document.getElementById("user_id").value);
         var city    = document.getElementById("user_city").value;
@@ -33,6 +43,7 @@
         xhr.onreadystatechange = function () {
             if (xhr.status == 200 && xhr.readyState == 4) {
                 document.getElementById("results").innerText = xhr.responseText;
+                nextToken(xhr.responseText);
             }
         }
 
@@ -50,6 +61,7 @@
         xhr.onreadystatechange = function () {
             if (xhr.status == 200 && xhr.readyState == 4) {
                 document.getElementById("results").innerText = xhr.responseText;
+                nextToken(xhr.responseText);
             }
         }
 
@@ -66,6 +78,7 @@
         xhr.onreadystatechange = function () {
             if (xhr.status == 200 && xhr.readyState == 4) {
                 document.getElementById("results").innerText = xhr.responseText;
+                nextToken(xhr.responseText);
             }
         }
 
@@ -80,6 +93,7 @@
         xhr.onreadystatechange = function () {
             if (xhr.status == 200 && xhr.readyState == 4) {
                 document.getElementById("results").innerText = xhr.responseText;
+                nextToken(xhr.responseText);
             }
         }
 
@@ -95,6 +109,7 @@
         xhr.onreadystatechange = function () {
             if (xhr.status == 200 && xhr.readyState == 4) {
                 document.getElementById("results").innerText = xhr.responseText;
+                nextToken(xhr.responseText);
             }
         }
 
@@ -104,6 +119,12 @@
 </script>
 
 <body>
+    <div>
+        <label>set token: </label>
+        <input type="text" value="" id="custom_token"/>
+        <button onclick="setToken()">set token</button>
+        <br/ ><br/ ><br/ ><br/ >
+    </div>
     <div>
         <label>id</label>
         <input type="text" name="user_id" id="user_id" value="0" />

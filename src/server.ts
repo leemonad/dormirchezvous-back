@@ -1,68 +1,96 @@
 import * as express from "express";
 import * as bodyParser from 'body-parser';
+import * as session from 'express-session';
+
+import {Facade} from "./Facade";
+import {IdParamGuard} from "./guards/IdParamGuard";
+import {AuthGuard} from "./guards/AuthGuard";
+import {CRSFGuard} from "./guards/CRSFGuard";
 
 import {HomeController} from "./controllers/HomeController";
 import {ErrorController} from "./controllers/ErrorController";
-
-
-import {AddAnnounceController} from "./controllers/announces/AddAnnounceController";
-import {GetAnnouncesController} from "./controllers/announces/GetAnnouncesController";
-import {RemoveAnnounceController} from "./controllers/announces/RemoveAnnounceController";
-import {UpdateAnnouncesController} from "./controllers/announces/UpdateAnnouncesController";
-
-import {GetSubscriptionsController} from "./controllers/subscriptions/GetSubscriptionsController";
-import {AddSubscriptionController} from "./controllers/subscriptions/AddSubscriptionController";
-import {RemoveSubscriptionController} from "./controllers/subscriptions/RemoveSubscriptionController";
-import {UpdateSubscriptionsController} from "./controllers/subscriptions/UpdateSubscriptionsController";
-
-import {AddUserController} from "./controllers/users/AddUserController";
-import {GetUsersController} from "./controllers/users/GetUsersController";
-import {RemoveUserController} from "./controllers/users/RemoveUserController";
-import {UpdateUsersController} from "./controllers/users/UpdateUsersController";
-
-import {GetEventsController} from "./controllers/events/GetEventsController"
-import {AddEventController} from "./controllers/events/AddEventController";
-import {RemoveEventController} from "./controllers/events/RemoveEventController";
-import {UpdateEventsController} from "./controllers/events/UpdateEventsController";
+import {AuthController} from "./controllers/AuthController";
+import {AnnounceController} from "./controllers/AnnounceController";
+import {EventController} from "./controllers/EventController";
+import {SubscriptionController} from "./controllers/SubscriptionController";
+import {UserController} from "./controllers/UserController";
 
 
 let app = express();
 
-
+// for sessions
+app.use(session({secret:"ff17b250a5175022a37ab034cb7b54d7"}));
 // for parsing application/json
 app.use(bodyParser.json());
 // for parsing application/x-www-form-urlencoded
 // app.use(bodyParser.urlencoded({ extended: true })); 
 
+Facade.getInstance().register(  "announces", 
+                                AnnounceController.create, 
+                                [new AuthGuard()],                                      // get 
+                                [new AuthGuard(), new CRSFGuard()],                     // post
+                                [new AuthGuard(), new CRSFGuard(), new IdParamGuard()], // put
+                                [new AuthGuard(), new CRSFGuard(), new IdParamGuard()]  // delete
+);
+
+Facade.getInstance().register(  "events", 
+                                EventController.create, 
+                                [new AuthGuard()],                                      // get 
+                                [new AuthGuard(), new CRSFGuard()],                     // post
+                                [new AuthGuard(), new CRSFGuard(), new IdParamGuard()], // put
+                                [new AuthGuard(), new CRSFGuard(), new IdParamGuard()]  // delete
+);
+
+Facade.getInstance().register(  "subs", 
+                                SubscriptionController.create, 
+                                [new AuthGuard()],                                      // get 
+                                [new AuthGuard(), new CRSFGuard()],                     // post
+                                [new AuthGuard(), new CRSFGuard(), new IdParamGuard()], // put
+                                [new AuthGuard(), new CRSFGuard(), new IdParamGuard()]  // delete
+);
+
+Facade.getInstance().register(  "users", 
+                                UserController.create, 
+                                [new AuthGuard()],                                      // get 
+                                [new AuthGuard(), new CRSFGuard()],                     // post
+                                [new AuthGuard(), new CRSFGuard(), new IdParamGuard()], // put
+                                [new AuthGuard(), new CRSFGuard(), new IdParamGuard()]  // delete
+);
+
+Facade.getInstance().register( "auth", AuthController.create, [], [], [], [] );
 
 
-app.get     ('/'                    , HomeController.create                 ); // ping server
+app.get     ('/'                    , HomeController.create                       ); // ping server
+app.post    ('/auth'                , Facade.getInstance().create("auth")         ); // do auth
 
 
-app.post    ('/announces'           , AddAnnounceController.create          ); // add one 
-app.get     ('/announces'           , GetAnnouncesController.create         ); // get all or one
-app.get     ('/announces/:id'       , GetAnnouncesController.create         ); // get all or one
-app.put     ("/announces/:id"       , UpdateAnnouncesController.create      ); // update one
-app.delete  ('/announces/:id'       , RemoveAnnounceController.create       ); // remove one
-
-app.post    ('/users'               , AddUserController.create              ); // add one 
-app.get     ('/users'               , GetUsersController.create             ); // get all or one
-app.get     ('/users/:id'           , GetUsersController.create             ); // get all or one
-app.put     ("/users/:id"           , UpdateUsersController.create          ); // update one
-app.delete  ('/users/:id'           , RemoveUserController.create           ); // remove one
-
-app.post    ('/events'              , AddEventController.create             ); // add one 
-app.get     ('/events'              , GetEventsController.create            ); // get all or one
-app.get     ('/events/:id'          , GetEventsController.create            ); // get all or one
-app.put     ("/events/:id"          , UpdateEventsController.create         ); // update one
-app.delete  ('/events/:id'          , RemoveEventController.create          ); // remove one
+app.post    ('/announces'           , Facade.getInstance().create("announces")   ); // add one 
+app.get     ('/announces'           , Facade.getInstance().create("announces")   ); // get all or one
+app.get     ('/announces/:id'       , Facade.getInstance().create("announces")   ); // get all or one
+app.put     ("/announces/:id"       , Facade.getInstance().create("announces")   ); // update one
+app.delete  ('/announces/:id'       , Facade.getInstance().create("announces")   ); // remove one
 
 
-app.post    ('/subscriptions'       , AddSubscriptionController.create      ); // add one 
-app.get     ('/subscriptions'       , GetSubscriptionsController.create     ); // get all or one
-app.get     ('/subscriptions/:id'   , GetSubscriptionsController.create     ); // get all or one
-app.put     ("/subscriptions/:id"   , UpdateSubscriptionsController.create  ); // update one
-app.delete  ('/subscriptions/:id'   , RemoveSubscriptionController.create   ); // remove one
+
+app.post    ('/users'               , Facade.getInstance().create("users")      ); // add one 
+app.get     ('/users'               , Facade.getInstance().create("users")      ); // get all or one
+app.get     ('/users/:id'           , Facade.getInstance().create("users")      ); // get all or one
+app.put     ("/users/:id"           , Facade.getInstance().create("users")      ); // update one
+app.delete  ('/users/:id'           , Facade.getInstance().create("users")      ); // remove one
+
+app.post    ('/events'              , Facade.getInstance().create("events")     ); // add one 
+app.get     ('/events'              , Facade.getInstance().create("events")     ); // get all or one
+app.get     ('/events/:id'          , Facade.getInstance().create("events")     ); // get all or one
+app.put     ("/events/:id"          , Facade.getInstance().create("events")     ); // update one
+app.delete  ('/events/:id'          , Facade.getInstance().create("events")     ); // remove one
+
+
+app.post    ('/subscriptions'       , Facade.getInstance().create("subs")       ); // add one 
+app.get     ('/subscriptions'       , Facade.getInstance().create("subs")       ); // get all or one
+app.get     ('/subscriptions/:id'   , Facade.getInstance().create("subs")       ); // get all or one
+app.put     ("/subscriptions/:id"   , Facade.getInstance().create("subs")       ); // update one
+app.delete  ('/subscriptions/:id'   , Facade.getInstance().create("subs")       ); // remove one
+
 
 
 

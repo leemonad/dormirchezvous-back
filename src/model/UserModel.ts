@@ -4,6 +4,7 @@ import { Database } from './Database';
 export class UserModel {
 
     private static _instance: UserModel;
+
     public static getInstance(): UserModel {
         UserModel._instance = UserModel._instance || new UserModel();
         return UserModel._instance;
@@ -12,9 +13,9 @@ export class UserModel {
     constructor() { }
 
     // do some update stuff
-    public update(p_vo: UserVO): void 
+    public update(p_vo: UserVO): Promise<any> 
     {
-        Database.getInstance().query(
+        return Database.getInstance().query(
             "UPDATE users SET address=?, city=?, name=?, surname=?, phone=?, zipcode=? WHERE id=?",
             [
                 p_vo.address,
@@ -28,9 +29,9 @@ export class UserModel {
         );
     }
 
-    public add(p_vo: UserVO): void 
+    public add(p_vo: UserVO): Promise<any> 
     {
-        Database.getInstance().query(
+        return Database.getInstance().query(
             "INSERT INTO users (address, city, name, surname, phone, zipcode) VALUES(?, ?, ?, ?, ?, ?)",
             [
                 p_vo.address,
@@ -43,9 +44,9 @@ export class UserModel {
         );
     }
 
-    public remove(p_id: number): void 
+    public remove(p_id: number): Promise<any> 
     {
-        Database.getInstance().query(
+        return Database.getInstance().query(
             "DELETE FROM users WHERE id=?", [p_id]
         );
     }

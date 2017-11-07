@@ -12,9 +12,9 @@ export class SubscriptionModel {
     constructor() { }
 
     // do some update stuff
-    public update(p_vo: SubscriptionVO): void 
+    public update(p_vo: SubscriptionVO): Promise<any> 
     {
-        Database.getInstance().query(
+        return Database.getInstance().query(
             "UPDATE subscriptions SET announce_id=?, approved=?, msg=? WHERE id=?",
             [
                 p_vo.announce_id,
@@ -25,9 +25,9 @@ export class SubscriptionModel {
         );
     }
 
-    public add(p_vo: SubscriptionVO): void 
+    public add(p_vo: SubscriptionVO): Promise<any> 
     {
-        Database.getInstance().query(
+        return Database.getInstance().query(
             "INSERT INTO subscriptions (announce_id, approved, msg) VALUES(?, ?, ?)",
             [
                 p_vo.announce_id,
@@ -37,9 +37,9 @@ export class SubscriptionModel {
         );
     }
 
-    public remove(p_id: number): void 
+    public remove(p_id: number): Promise<any> 
     {
-        Database.getInstance().query(
+        return Database.getInstance().query(
             "DELETE FROM subscriptions WHERE id=?", [p_id]
         );
     }

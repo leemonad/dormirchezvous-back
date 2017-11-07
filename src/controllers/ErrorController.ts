@@ -1,3 +1,4 @@
+import {BAD_URI_ERROR} from "../config/app.constants";
 export class ErrorController {
 
 	static create(req: any, res: any): ErrorController {
@@ -6,6 +7,6 @@ export class ErrorController {
 
 	constructor(req: any, res: any) {
 		res.setHeader("Content-Type", "application/json");
-		res.send(404, JSON.stringify({ msg: "Not Found" }));
+		res.send(404, JSON.stringify(BAD_URI_ERROR));
 	}
 }

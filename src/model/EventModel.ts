@@ -12,9 +12,9 @@ export class EventModel {
     constructor() { }
 
     // do some update stuff
-    public update(p_vo: EventVO): void 
+    public update(p_vo: EventVO): Promise<any>  
     {
-        Database.getInstance().query(
+        return Database.getInstance().query(
             "UPDATE events SET locked=?, name=? WHERE id=?",
             [
                 p_vo.locked,
@@ -24,9 +24,9 @@ export class EventModel {
         );
     }
 
-    public add(p_vo: EventVO): void 
+    public add(p_vo: EventVO): Promise<any>  
     {
-        Database.getInstance().query(
+        return Database.getInstance().query(
             "INSERT INTO events (locked, name) VALUES(?, ?)",
             [
                 p_vo.locked,
@@ -35,9 +35,9 @@ export class EventModel {
         );
     }
 
-    public remove(p_id: number): void 
+    public remove(p_id: number): Promise<any>  
     {
-        Database.getInstance().query(
+        return Database.getInstance().query(
             "DELETE FROM events WHERE id=?", [p_id]
         );
     }
