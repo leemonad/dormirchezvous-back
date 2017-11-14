@@ -1,4 +1,5 @@
-import { SessionModel } from "../model/SessionModel";
+import { Session } from "../model/Session";
+import {MYSQL_ERROR} from "../config/app.constants";
 
 export abstract class AbstractController {
 
@@ -6,11 +7,14 @@ export abstract class AbstractController {
     protected _req: any;
     protected _res: any;
     protected _data: any;
+    protected _session:Session;
 
-    constructor(req: any, res: any) {
+    constructor(session:Session, req: any, res: any) {
         this._req = req;
         this._res = res;
         this._data = null;
+        this._session = session;
+        this._mysqlErrorHandler = this._mysqlErrorHandler.bind(this);
 
         switch (req.method) {
             case "GET": this.get(); break;
@@ -35,11 +39,10 @@ export abstract class AbstractController {
     }
 
     public send() {
-
-        SessionModel.getInstance().updateToken(this._req);
+        this._session.updateToken();
 
         const output: Object = {
-            token: SessionModel.getInstance().getCurrentToken(this._req),
+            token: this._session.getCurrentToken(),
             data: this._data
         };
 
@@ -51,6 +54,11 @@ export abstract class AbstractController {
     public post(): void { }
     public get(): void { }
     public delete(): void { }
+
+    protected _mysqlErrorHandler(error:any):void{
+        this.setOutput(error);
+        this.send();
+    }
 
 
 }

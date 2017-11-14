@@ -1,4 +1,7 @@
+import {Session} from "../model/Session";
+
 export interface IGuard{
-    transform(req:any, res:any):boolean;
+
+    transform(session:Session, req:any, res:any):boolean;
     getErrorCode():any;
 }

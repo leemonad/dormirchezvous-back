@@ -2,15 +2,16 @@ import { AbstractController } from "./AbstractController";
 import { EventModel } from "../model/EventModel";
 import { EventVO } from "../model/vo/EventVO";
 import {MYSQL_ERROR} from "../config/app.constants";
+import {Session} from "../model/Session";
 
 export class EventController extends AbstractController {
 
-    static create(req: any, res: any): EventController {
-        return new EventController(req, res);
+    static create(session:Session, req: any, res: any): EventController {
+        return new EventController(session, req, res);
     }
 
-    constructor(req: any, res: any) {
-        super(req, res);
+    constructor(session:Session, req: any, res: any) {
+        super(session, req, res);
     }
 
     public put(): void {    
@@ -27,12 +28,7 @@ export class EventController extends AbstractController {
                 this.setOutput(results);
                 this.send();
             }
-        ).catch(
-            (error:any) => {
-                this.setOutput(MYSQL_ERROR);
-                this.send();
-            }
-        );
+        ).catch(this._mysqlErrorHandler);
     }
 
     public post(): void {
@@ -46,12 +42,7 @@ export class EventController extends AbstractController {
                 this.setOutput(results);
                 this.send();
             }
-        ).catch(
-            (error:any) => {
-                this.setOutput(MYSQL_ERROR);
-                this.send();
-            }
-        );
+        ).catch(this._mysqlErrorHandler);
     }
 
     public get(): void {
@@ -65,12 +56,7 @@ export class EventController extends AbstractController {
                     this.setOutput([row]);
                     this.send();
                 }
-            ).catch(
-                (error:any) => {
-                    this.setOutput(MYSQL_ERROR);
-                    this.send();
-                }
-            );
+            ).catch(this._mysqlErrorHandler);
         }
         else {
             EventModel.getInstance().getAll().then(
@@ -78,12 +64,7 @@ export class EventController extends AbstractController {
                     this.setOutput(rows);
                     this.send();
                 }
-            ).catch(
-                (error:any) => {
-                    this.setOutput(MYSQL_ERROR);
-                    this.send();
-                }
-            );
+            ).catch(this._mysqlErrorHandler );
         }
     }
 
@@ -96,12 +77,7 @@ export class EventController extends AbstractController {
                 this.setOutput(results); 
                 this.send();
             }
-        ).catch(
-            (error:any) => {
-                this.setOutput(MYSQL_ERROR);
-                this.send();
-            }
-        );
+        ).catch(this._mysqlErrorHandler);
     }
 
 }

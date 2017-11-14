@@ -1,6 +1,7 @@
 import { IGuard } from "./guards/IGuard";
 import { BAD_HTTP_VERB_ERROR, BAD_URI_ERROR } from "./config/app.constants";
 import {AbstractController} from "./controllers/AbstractController";
+import {Session} from "./model/Session";
 
 
 
@@ -31,13 +32,13 @@ export class Facade {
         return (verbs.indexOf(current) > -1);
     }
 
-    private _doGuards(guards: IGuard[], req: any, res: any): any {
+    private _doGuards(guards: IGuard[],session:Session,  req: any, res: any): any {
 
         let i: number = 0;
         let max: number = guards.length;
 
         for (i = 0; i < max; i++) {
-            if (guards[i].transform(req, res) === false) {
+            if (guards[i].transform(session, req, res) === false) {
                 return guards[i].getErrorCode();
             }
         }
@@ -69,6 +70,7 @@ export class Facade {
 
         
         const infos: any                    = this._getInfos(alias);
+        const session:Session               = new Session(req.session);
         let controller:AbstractController   = null;
         let guardError: any                 = null;
         let guards: IGuard[]                = null;
@@ -90,10 +92,10 @@ export class Facade {
         }
 
         switch (req.method) {
-            case "GET"      : guardError = this._doGuards(infos.get_guards, req, res)   ; break;
-            case "POST"     : guardError = this._doGuards(infos.post_guards, req, res)  ; break;
-            case "DELETE"   : guardError = this._doGuards(infos.delete_guards, req, res); break;
-            case "PUT"      : guardError = this._doGuards(infos.put_guards, req, res)   ; break;
+            case "GET"      : guardError = this._doGuards(infos.get_guards, session, req, res)   ; break;
+            case "POST"     : guardError = this._doGuards(infos.post_guards,session,  req, res)  ; break;
+            case "DELETE"   : guardError = this._doGuards(infos.delete_guards,session,  req, res); break;
+            case "PUT"      : guardError = this._doGuards(infos.put_guards,session,  req, res)   ; break;
         }
 
         if( guardError != null )
@@ -104,14 +106,8 @@ export class Facade {
         else
         {
             func = infos.factory as Function;
-            func.apply(this, [req, res]);
+            func.apply(this, [session, req, res]);
         }
-        
-        1
-
-
-
-
 
     }
 

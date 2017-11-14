@@ -1,4 +1,5 @@
 import {OK} from "../config/app.constants";
+import {Database} from "../model/Database";
 
 export class HomeController {
 
@@ -7,7 +8,18 @@ export class HomeController {
     }
 
     constructor(req: any, res: any) {
-        res.setHeader("Content-Type", "application/json");
-        res.send(200, JSON.stringify(OK));
+
+        Database.getInstance().ping().then(
+            () => {
+                res.setHeader("Content-Type", "application/json");
+                res.send(200, JSON.stringify(OK));
+            }
+        ).catch(
+            (error:any) => {
+                res.setHeader("Content-Type", "application/json");
+                res.send(200, JSON.stringify(error));
+            }
+        )
+        
     }
 }

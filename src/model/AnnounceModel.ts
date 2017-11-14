@@ -65,4 +65,16 @@ export class AnnounceModel {
 
         );
     }
+
+    public getUserAnnounceByEventId(user_id:number, event_id:number):Promise<AnnounceVO>{
+
+        return Database.getInstance().query(
+            "SELECT * FROM announces WHERE user_id=? AND event_id=?", 
+            [user_id, event_id]
+        ).then(
+            (rows: Array<any>) => {
+                return rows[0] as AnnounceVO;
+            }
+        );
+    }
 }

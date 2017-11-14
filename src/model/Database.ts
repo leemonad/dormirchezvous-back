@@ -21,6 +21,23 @@ export class Database{
         this._pool = mysql.createPool(MYSQL_CONFIG);
     }
 
+    public ping():Promise<any>{
+        return new Promise<any>(
+            (resolve, reject) => {
+                this._pool.getConnection(
+                    (error:mysql.MysqlError, connection:mysql.PoolConnection) => {
+                        if( error ){
+                            reject(error);
+                        }
+                        else{
+                            resolve();
+                        }
+                    }
+                )
+            }
+        );
+    }
+
 
     public query(p_sql:string, p_values:Array<any>):Promise<Array<any>>
     {

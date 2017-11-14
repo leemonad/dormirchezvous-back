@@ -1,19 +1,20 @@
 import { AbstractController } from "./AbstractController";
 import { AnnounceModel } from "../model/AnnounceModel";
 import { AnnounceVO } from "../model/vo/AnnounceVO";
-import {MYSQL_ERROR} from "../config/app.constants";
+import {Session} from "../model/Session";
+import {MYSQL_ERROR, ONLY_ONE_ANNOUNCE} from "../config/app.constants";
 
 export class AnnounceController extends AbstractController {
 
-    static create(req: any, res: any): AnnounceController {
-        return new AnnounceController(req, res);
+    static create(session:Session, req: any, res: any): AnnounceController {
+        return new AnnounceController(session, req, res);
     }
 
-    constructor(req: any, res: any) {
-        super(req, res);
+    constructor(session:Session, req: any, res: any) {
+        super(session, req, res);
     }
 
-    public put(): void {    
+    public put(): void {  
 
         const vo: AnnounceVO    = new AnnounceVO();
         const params: any       = this.getUserParams();
@@ -21,37 +22,46 @@ export class AnnounceController extends AbstractController {
 
         vo.populate(input);
         vo.id = parseInt(params.id);
+        // on force le user_id puisqu'un utilisateur n'a pas 
+        // le droit de manipuler des infos autres que les siennes
+        vo.user_id = this._session.getUserId();
 
         AnnounceModel.getInstance().update(vo).then(
             (results:any) => {
                 this.setOutput(results);
                 this.send();
             }
-        ).catch(
-            (error:any) => {
-                this.setOutput(MYSQL_ERROR);
-                this.send();
-            }
-        );
+        ).catch(this._mysqlErrorHandler);
     }
 
     public post(): void {
-        const vo: AnnounceVO = new AnnounceVO();
-        const input: any = this.getUserInput();
+        const vo: AnnounceVO    = new AnnounceVO();
+        const input: any        = this.getUserInput();
 
         vo.populate(input);
+        // on force le user_id puisqu'un utilisateur n'a pas 
+        // le droit de manipuler des infos autres que les siennes
+        vo.user_id = this._session.getUserId();
 
-        AnnounceModel.getInstance().add(vo).then(
-            (results:any) => {
-                this.setOutput(results);
-                this.send();
+        AnnounceModel.getInstance().getUserAnnounceByEventId(vo.user_id, vo.event_id).then(
+            (results:AnnounceVO) => {
+                if( !results ){
+                    console.log(results);
+                    AnnounceModel.getInstance().add(vo).then(
+                        (results:any) => {
+                            this.setOutput(results);
+                            this.send();
+                        }
+                    ).catch(this._mysqlErrorHandler);
+                }
+                else{
+                    this.setOutput(ONLY_ONE_ANNOUNCE)
+                    this.send();
+                }
             }
-        ).catch(
-            (error:any) => {
-                this.setOutput(MYSQL_ERROR);
-                this.send();
-            }
-        );
+        ).catch(this._mysqlErrorHandler);
+
+        
     }
 
     public get(): void {
@@ -65,12 +75,7 @@ export class AnnounceController extends AbstractController {
                     this.setOutput([row]);
                     this.send();
                 }
-            ).catch(
-                (error:any) => {
-                    this.setOutput(MYSQL_ERROR);
-                    this.send();
-                }
-            );
+            ).catch(this._mysqlErrorHandler);
         }
         else {
             AnnounceModel.getInstance().getAll().then(
@@ -78,12 +83,7 @@ export class AnnounceController extends AbstractController {
                     this.setOutput(rows);
                     this.send();
                 }
-            ).catch(
-                (error:any) => {
-                    this.setOutput(MYSQL_ERROR);
-                    this.send();
-                }
-            );
+            ).catch(this._mysqlErrorHandler);
         }
     }
 
@@ -96,12 +96,7 @@ export class AnnounceController extends AbstractController {
                 this.setOutput(results); 
                 this.send();
             }
-        ).catch(
-            (error:any) => {
-                this.setOutput(MYSQL_ERROR);
-                this.send();
-            }
-        );
+        ).catch(this._mysqlErrorHandler);
     }
 
 }
