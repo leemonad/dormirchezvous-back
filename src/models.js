@@ -18,6 +18,7 @@ const User = db.define('user', {
     primaryKey: true,
     autoIncrement: true,
   },
+  email: Sequelize.STRING,
   name: Sequelize.STRING,
   contactInfo: Sequelize.STRING,
 });
