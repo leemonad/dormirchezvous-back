@@ -15,6 +15,15 @@ const writeConfig = ({ sessionSecret, database = {} }) => {
     session: {
       secret: sessionSecret,
     },
+    seedingData: {
+      events: [
+        {
+          title: 'Conférence Lorem Ipsum',
+          description: "Une conférence d'exemple. Lorem Ipsum Dolor Sit Amet.",
+          open: true,
+        },
+      ],
+    },
   };
   fs.writeFileSync(
     path.join(__dirname, 'config.json'),

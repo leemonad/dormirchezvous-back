@@ -6,6 +6,7 @@
   "main": "src/server.js",
   "scripts": {
     "generate-config": "NODE_ENV=development node config/generate.js",
+    "seed-database": "node config/seed.js",
     "start": "NODE_ENV=development nodemon src/server.js",
     "generate-config:production": "NODE_ENV=production node config/generate.js",
     "serve:production": "NODE_ENV=production node app.js",
