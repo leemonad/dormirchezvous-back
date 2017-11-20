@@ -10,4 +10,8 @@
 - (Facultatif) `npm run seed-database` : Injecte de fausses données dans la base de données. Utilise les données de l'objet `seedingData` dans le fichier de configuration
 - `npm start` : Lance le serveur à localhost:3000
 
+## Avant un commit
+
+- `npm run format` : Formatte les fichiers JS avec [Prettier](https://github.com/prettier/prettier)
+
 /!\ Tout commit sur master est automatiquement déployé sur le serveur de dev
