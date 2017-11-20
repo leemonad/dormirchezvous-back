@@ -1,4 +1,4 @@
-## Configuration require :
+## Configuration requise :
 
 - Node.js 8
 - Une base MySQL/MariaDB
