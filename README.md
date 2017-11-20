@@ -3,6 +3,7 @@
 - Node.js 8
 - Une base MySQL/MariaDB
 
+
 ## Installation
 
 - `npm install`
@@ -10,4 +11,4 @@
 - (Optionnel) `npm run seed-database` : Injecte de fausses données dans la base de données. Utilise les données de l'objet `seedingData` dans le fichier de configuration
 - `npm start` : Lance le serveur à localhost:3000
 
-** /!\ ** Tout commit sur master est automatiquement déployé sur le serveur de dev
+/!\ Tout commit sur master est automatiquement déployé sur le serveur de dev
