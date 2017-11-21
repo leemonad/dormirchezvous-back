@@ -35,14 +35,7 @@ const Event = db.define(
     title: Sequelize.TEXT,
     description: Sequelize.TEXT,
     open: Sequelize.BOOLEAN,
-  },
-  {
-    defaultScope: {
-      where: {
-        open: true,
-      },
-    },
-  },
+  }
 );
 exports.Event = Event;
 
@@ -70,5 +63,6 @@ exports.Candidacy = Candidacy;
 
 User.hasMany(Candidacy, { as: 'Candidacies' });
 User.hasMany(Ad);
+Event.hasMany(Ad)
 Ad.belongsTo(Event);
 Candidacy.belongsTo(Ad);

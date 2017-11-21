@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const passport = require('passport');
 
 const config = require('../config/config.json');
-const { db, Event, User } = require('./models');
+const { db, Event, User, Ad } = require('./models');
 
 const events = require('./controllers/events');
 
@@ -79,7 +79,7 @@ if (app.get('env') === 'development') {
   createFakeLoginSystem();
 }
 
-app.use('/events', require('./controllers/events')(Event));
+app.use('/events', require('./controllers/events')(Event, Ad));
 
 app.use(function notFound(req, res, next) {
   const err = new Error('Not found');

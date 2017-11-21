@@ -19,4 +19,7 @@ const requireParams = params => (req, res, next) => {
       req.body[paramName] = convertedParam;
     }
   }
+  next()
 };
+
+module.exports = requireParams
