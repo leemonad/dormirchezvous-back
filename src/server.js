@@ -80,6 +80,7 @@ if (app.get('env') === 'development') {
 }
 
 app.use('/events', require('./controllers/events')(Event, Ad));
+app.use('/profile', require('./controllers/profile')());
 
 app.use(function notFound(req, res, next) {
   const err = new Error('Not found');
