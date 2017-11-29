@@ -1,7 +1,10 @@
 language: node_js
 node_js: node
+
 branches:
   only: master
+
 addons:
   ssh_known_hosts: 163.172.60.184
+
 script: bash .travis/deploy.sh
