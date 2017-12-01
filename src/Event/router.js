@@ -1,7 +1,10 @@
 const { Router } = require('express');
-const requireAuth = require('../middleware/requireAuth');
-const requireParams = require('../middleware/requireParams');
-const { asyncHandler } = require('./utils');
+
+const {
+  requireAuth,
+  asyncHandler,
+  requireParams,
+} = require('../utils');
 
 const configureRouter = (Event, Ad) => {
   const getCurrentEvent = () =>
@@ -25,6 +28,7 @@ const configureRouter = (Event, Ad) => {
   );
 
   router.use('/current/ads', requireAuth);
+
   router
     .route('/current/ads')
     .get(

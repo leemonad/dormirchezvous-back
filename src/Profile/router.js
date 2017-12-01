@@ -1,6 +1,9 @@
 const { Router } = require('express');
-const requireAuth = require('../middleware/requireAuth');
-const { asyncHandler } = require('./utils');
+
+const {
+    asyncHandler,
+    requireAuth,
+} = require('../utils');
 
 const configureRouter = () => {
   const router = Router();
