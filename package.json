@@ -1,20 +1,17 @@
 {
-  "name": "dodo-insoumis",
-  "version": "0.0.1",
+  "name": "dormirchezvous-back",
+  "version": "0.0.2",
   "private": true,
-  "description": "projet de mise en relation lfi",
+  "description": "Projet de mise en relation",
   "main": "src/server.js",
   "scripts": {
-    "generate-config": "NODE_ENV=development node config/generate.js",
-    "seed-database": "node config/seed.js",
-    "start": "NODE_ENV=development nodemon src/server.js",
-    "generate-config:production": "NODE_ENV=production node config/generate.js",
-    "serve:production": "NODE_ENV=production node app.js",
-    "format": "prettier {src,config}/{*.{js,ts},**/*.{js,ts}} --write --trailing-comma all --single-quote"
+    "start": "nodemon --exec 'node -r dotenv/config' src/server.js",
+    "format": "prettier {src,config}/{*.js,**/*.js} --write --trailing-comma all --single-quote"
   },
   "dependencies": {
     "async": "^2.5.0",
     "body-parser": "^1.18.2",
+    "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "morgan": "^1.9.0",
@@ -23,6 +20,7 @@
     "sequelize": "^4.22.7"
   },
   "devDependencies": {
+    "convict": "^4.0.1",
     "nodemon": "^1.12.1",
     "passport-strategy": "^1.0.0",
     "prettier": "^1.8.2"

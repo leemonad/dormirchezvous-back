@@ -1,13 +1,13 @@
 const Sequelize = require('sequelize');
-const { database } = require('../config/config.json');
+const config = require('../config');
 
 const db = new Sequelize({
   dialect: 'mysql',
-  host: database.host,
-  port: database.port,
-  database: database.name,
-  username: database.user,
-  password: database.password,
+  host: config.get('database.host'),
+  port: config.get('database.port'),
+  database: config.get('database.name'),
+  username: config.get('database.user'),
+  password: config.get('database.password'),
   operatorsAliases: Sequelize.Op,
 });
 exports.db = db;

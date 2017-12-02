@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const passport = require('passport');
 
-const config = require('../config/config.json');
+const config = require('../config');
 const { db, Event, User, Ad } = require('./models');
 
 const events = require('./controllers/events');
@@ -68,7 +68,7 @@ app.set('env', process.env.NODE_ENV || 'development');
 app.use(morgan(app.get('env') === 'development' ? 'dev' : 'common'));
 app.use(
   session({
-    secret: config.session.secret,
+    secret: config.get('session_secret'),
     resave: true,
     saveUninitialized: false,
   }),
