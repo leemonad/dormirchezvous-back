@@ -1,4 +1,12 @@
-const requireParams = params => (req, res, next) => {
+exports.asyncHandler = handler => async (req, res, next) => {
+  try {
+    await handler(req, res, next);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.requireParams = params => (req, res, next) => {
   for (const paramName in params) {
     const requestParam = req.body[paramName];
 
@@ -22,4 +30,11 @@ const requireParams = params => (req, res, next) => {
   next()
 };
 
-module.exports = requireParams
+exports.requireAuth = (req, res, next) => {
+  if (!req.user) {
+    const err = new Error('Forbidden')
+    err.status = 403
+    return next(err)
+  }
+  next()
+};
