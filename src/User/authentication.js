@@ -1,6 +1,6 @@
-const passport = require('passport');
+import passport from 'passport';
 
-const createFakeLoginSystem = (app) => {
+export const createFakeLoginSystem = (app) => {
     const PassportStrategy = require('passport-strategy');
     class LocalStrategy extends PassportStrategy {
         constructor(verify) {
@@ -52,5 +52,3 @@ const createFakeLoginSystem = (app) => {
         res.send(req.user);
     });
 };
-
-exports.createFakeLoginSystem = createFakeLoginSystem;

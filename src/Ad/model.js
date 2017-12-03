@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+import Sequelize from 'sequelize';
 
 const Ad = {
     id: {
@@ -11,4 +11,4 @@ const Ad = {
     availableSpots: Sequelize.INTEGER,
 };
 
-module.exports = Ad;
+export default Ad;

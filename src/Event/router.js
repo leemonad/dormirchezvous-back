@@ -1,10 +1,10 @@
-const { Router } = require('express');
+import { Router } from 'express';
 
-const {
+import {
   requireAuth,
   asyncHandler,
   requireParams,
-} = require('../utils');
+} from '../utils';
 
 const configureRouter = (Event, Ad) => {
   const getCurrentEvent = () =>
@@ -79,4 +79,4 @@ const configureRouter = (Event, Ad) => {
   return router;
 };
 
-module.exports = configureRouter;
+export default configureRouter;

@@ -45,6 +45,16 @@ If you need to stop all project containers, just use:
 make stop
 ```
 
+### Building Project
+
+You can build your project for production. To do that, just use:
+
+``` sh
+make build
+```
+
+Your production will be placed into a "build" folder at the root of the projet.
+
 ### Debugging Docker Containers
 
 You can display (and refresh) all project containers logs using:

@@ -5,7 +5,8 @@
   "description": "Projet de mise en relation",
   "main": "src/server.js",
   "scripts": {
-    "start": "nodemon --exec 'node -r dotenv/config' src/server.js",
+    "build": "babel -d ./build ./src -s",
+    "start": "nodemon  --exec \"node -r dotenv/config -r babel-register src/server.js\"",
     "format": "prettier {src,config}/{*.js,**/*.js} --write --trailing-comma all --single-quote"
   },
   "dependencies": {
@@ -20,6 +21,9 @@
     "sequelize": "^4.22.7"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
     "convict": "^4.0.1",
     "nodemon": "^1.12.1",
     "passport-strategy": "^1.0.0",

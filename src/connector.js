@@ -1,11 +1,10 @@
-const Sequelize = require('sequelize');
+import Sequelize from 'sequelize';
 
-const config = require('../config');
-
-const AdModel = require('./Ad/model');
-const CandidacyModel = require('./Candidacy/model');
-const EventModel = require('./Event/model');
-const UserModel = require('./User/model');
+import config from '../config';
+import AdModel from './Ad/model';
+import CandidacyModel from './Candidacy/model';
+import EventModel from './Event/model';
+import UserModel from './User/model';
 
 const connector = new Sequelize({
   dialect: 'mysql',
@@ -19,10 +18,10 @@ const connector = new Sequelize({
 
 // Models
 
-const Ad = connector.define('ad', AdModel);
-const Candidacy = connector.define('candidacy', CandidacyModel);
-const Event = connector.define('event', EventModel);
-const User = connector.define('user', UserModel);
+export const Ad = connector.define('ad', AdModel);
+export const Candidacy = connector.define('candidacy', CandidacyModel);
+export const Event = connector.define('event', EventModel);
+export const User = connector.define('user', UserModel);
 
 // Relations
 
@@ -32,12 +31,7 @@ Event.hasMany(Ad);
 User.hasMany(Candidacy, { as: 'Candidacies' });
 User.hasMany(Ad);
 
-exports.Ad = connector.models.ad;
-exports.Candidacy = connector.models.candidacy;
-exports.Event = connector.models.event;
-exports.User = connector.models.user;
-
-module.exports = connector;
+export default connector;
 
 
 
