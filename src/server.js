@@ -1,12 +1,16 @@
-const express = require('express');
-const session = require('express-session');
-const bodyParser = require('body-parser');
-const morgan = require('morgan');
+import 'babel-polyfill';
 
-const { createFakeLoginSystem } = require('./User/authentication');
-const config = require('../config');
-const connector = require('./connector');
-const { Event, Ad } = require('./connector');
+import express from 'express';
+import session from 'express-session';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
+
+import profileRouter from './Profile/router';
+import eventRouter from './Event/router';
+import { createFakeLoginSystem } from './User/authentication';
+import config from '../config';
+import connector from './connector';
+import { Event, Ad } from './connector';
 
 const isDev = config.get('env') === 'development';
 
@@ -28,8 +32,8 @@ if (isDev) {
   createFakeLoginSystem(app);
 }
 
-app.use('/events', require('./Event/router')(Event, Ad));
-app.use('/profile', require('./Profile/router')());
+app.use('/events', eventRouter(Event, Ad));
+app.use('/profile', profileRouter());
 
 app.use(function notFound(req, res, next) {
   const err = new Error('Not found');

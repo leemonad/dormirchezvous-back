@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+import Sequelize from 'sequelize';
 
 const Event = {
     id: {
@@ -11,4 +11,4 @@ const Event = {
     open: Sequelize.BOOLEAN,
 };
 
-module.exports = Event;
+export default Event;

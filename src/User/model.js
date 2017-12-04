@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+import Sequelize from 'sequelize';
 
 const User = {
     id: {
@@ -11,4 +11,4 @@ const User = {
     contactInfo: Sequelize.STRING,
 };
 
-module.exports = User;
+export default User;

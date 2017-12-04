@@ -1,4 +1,4 @@
-.PHONY: help format install connect start stop log
+.PHONY: help format install connect clean build start stop log
 
 DOCKER_COMPOSE = docker-compose -p dormirchezvous -f docker-compose.yml
 
@@ -14,6 +14,13 @@ install: ## Install docker + deps
 
 connect: ## Connect to node server
 	$(DOCKER_COMPOSE) run --rm node bash
+
+clean: ## Clean production build
+	$(DOCKER_COMPOSE) run --rm --no-deps node bash -ci "rm -rf build && mkdir build"
+
+build: ## Build project for production use
+	$(MAKE) clean
+	$(DOCKER_COMPOSE) run --rm --no-deps node bash -ci "npm run build"
 
 start: ## Start node server
 	$(DOCKER_COMPOSE) up -d

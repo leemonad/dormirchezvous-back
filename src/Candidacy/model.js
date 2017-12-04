@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+import Sequelize from 'sequelize';
 
 const Candidacy = {
     id: {
@@ -9,4 +9,4 @@ const Candidacy = {
     message: Sequelize.TEXT,
 }
 
-module.exports = Candidacy;
+export default Candidacy;

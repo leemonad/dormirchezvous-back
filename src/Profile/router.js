@@ -1,9 +1,9 @@
-const { Router } = require('express');
+import { Router } from 'express';
 
-const {
+import {
     asyncHandler,
     requireAuth,
-} = require('../utils');
+} from '../utils';
 
 const configureRouter = () => {
   const router = Router();
@@ -26,4 +26,4 @@ const configureRouter = () => {
   return router;
 };
 
-module.exports = configureRouter;
+export default configureRouter;
