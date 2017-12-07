@@ -32,13 +32,3 @@ User.hasMany(Candidacy, { as: 'Candidacies' });
 User.hasMany(Ad);
 
 export default connector;
-
-
-
-
-
-
-
-
-
-
