@@ -4,13 +4,13 @@ import express from 'express';
 import session from 'express-session';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
+import casual from 'casual';
 
-import profileRouter from './Profile/router';
-import eventRouter from './Event/router';
-import { createFakeLoginSystem } from './User/authentication';
+import profileRouter from './app/Profile/router';
+import eventRouter from './app/Event/router';
+import { createFakeLoginSystem } from './app/User/authentication';
+import connector from './app/connector';
 import config from '../config';
-import connector from './connector';
-import { Event, Ad } from './connector';
 
 const isDev = config.get('env') === 'development';
 
@@ -32,8 +32,8 @@ if (isDev) {
   createFakeLoginSystem(app);
 }
 
-app.use('/events', eventRouter(Event, Ad));
-app.use('/profile', profileRouter());
+app.use('/events', eventRouter);
+app.use('/profile', profileRouter);
 
 app.use(function notFound(req, res, next) {
   const err = new Error('Not found');
@@ -49,11 +49,8 @@ app.use(function errorHandler(err, req, res, next) {
 
 const port = process.env.PORT || 3000;
 
-connector
-  .sync()
-  .then(() => {
-    app.listen(port, () => {
-      console.log('Listening on port', port);
-    });
-  })
-  .catch(console.error);
+connector.sync().then(() => {
+  app.listen(port, () => {
+    console.log('Listening on port', port);
+  });
+}).catch(console.log);

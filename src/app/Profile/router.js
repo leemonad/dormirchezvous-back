@@ -1,15 +1,13 @@
 import { Router } from 'express';
 
-import {
-    asyncHandler,
-    requireAuth,
-} from '../utils';
+import asyncHandler from '../../handlers/asyncHandler';
+import requireAuthHandler from '../../handlers/requireAuthHandler';
 
 const configureRouter = () => {
   const router = Router();
   router
     .route('/')
-    .all(requireAuth)
+    .all(requireAuthHandler)
     .get((req, res) => res.send(req.user))
     .patch(
       asyncHandler(async (req, res) => {

@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 
-import config from '../config';
+import config from '../../config';
 import AdModel from './Ad/model';
 import CandidacyModel from './Candidacy/model';
 import EventModel from './Event/model';
