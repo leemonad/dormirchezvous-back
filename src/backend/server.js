@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 
-import connector from './app/connector';
+import connector from './connector';
 import router from './router';
 
 const port = process.env.PORT || 3000;

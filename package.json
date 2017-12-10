@@ -5,8 +5,10 @@
   "description": "Projet de mise en relation",
   "main": "src/server.js",
   "scripts": {
-    "build": "babel -d ./build ./src -s",
-    "start": "nodemon  --exec \"node -r dotenv/config -r babel-register src/server.js\"",
+    "build-backend": "babel -d ./build/backend ./src/backend -s",
+    "start-backend": "nodemon  --exec \"node -r dotenv/config -r babel-register src/backend/server.js\"",
+    "build-frontend": "cd src/frontend && npm run build && mv build ../../build/frontend",
+    "start-frontend": "export PORT=3001 && cd src/frontend && npm start",
     "format": "prettier {src,config}/{*.js,**/*.js} --write --trailing-comma all --single-quote"
   },
   "dependencies": {
