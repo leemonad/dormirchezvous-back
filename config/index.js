@@ -5,7 +5,7 @@ var config = convict({
     doc: 'The application environment.',
     format: ['production', 'development', 'test'],
     default: 'development',
-    env: 'NODE_ENV'
+    env: 'NODE_ENV',
   },
   session_secret: {
     doc: 'The session secret',
@@ -43,8 +43,8 @@ var config = convict({
       format: String,
       default: 'root',
       env: 'MYSQL_PASSWORD',
-    }
-  }
+    },
+  },
 });
 
 config.validate({ allowed: 'strict' });
