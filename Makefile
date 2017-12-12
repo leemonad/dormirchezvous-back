@@ -14,7 +14,7 @@ install: ## Install docker + deps
 	$(DOCKER_COMPOSE_EXEC) "npm install --no-progress"
 
 build: ## Build project for production use
-	$(DOCKER_COMPOSE_EXEC) "rm -rf build && mkdir build"
+	$(DOCKER_COMPOSE_EXEC) "rm -rf dist && mkdir dist"
 	$(DOCKER_COMPOSE_EXEC) "npm run build-backend"
 	$(DOCKER_COMPOSE_EXEC) "npm run build-frontend"
 
