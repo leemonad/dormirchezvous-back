@@ -5,10 +5,10 @@ import session from 'express-session';
 import graphqlHTTP from 'express-graphql';
 import passport from 'passport';
 
-import dataloaders from './app/dataloaders';
-import * as connector from './app/connector';
-import schema from './app/schema';
-import config from '../config';
+import dataloaders from './dataloaders';
+import * as connector from './connector';
+import schema from './schema';
+import config from '../../config';
 
 const isDev = config.get('env') === 'development';
 const router = express();
