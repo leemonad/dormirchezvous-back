@@ -17,7 +17,15 @@ module.exports = {
                 exclude: /node_modules/,
                 use: ['babel-loader'],
             },
+            {
+                test: /\.html$/,
+                use: ['html-loader'],
+            },
         ],
     },
-    plugins: [new HtmlWebpackPlugin()],
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: path.join(__dirname, 'src', 'app', 'index.html'),
+        })
+    ],
 };

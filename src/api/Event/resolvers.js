@@ -2,7 +2,16 @@ import DataLoader from 'dataloader';
 import { Op } from 'sequelize';
 
 export const Query = {
-  Events: (_, where, { connector }) => connector.Event.findAll({ where }),
+  EventPage: (_, { /* Handle pagination ... here */ }, { connector }) => (
+    connector.Event.findAndCountAll({
+        offset: 0,
+        limit: 10,
+    })
+    .then(({ count, rows }) => ({
+      items: rows,
+      totalCount: count,
+    }))
+  ),
 
   Event: (_, { id }, { connector }) =>
     connector.Event.find({

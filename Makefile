@@ -1,4 +1,4 @@
-.PHONY: help format install clean build start stop log
+.PHONY: help format install connect-backend clean build start stop log
 
 DOCKER_COMPOSE = docker-compose -p dormirchezvous -f docker-compose.yml
 DOCKER_COMPOSE_EXEC = $(DOCKER_COMPOSE) run --rm --no-deps backend bash -ci
@@ -12,6 +12,9 @@ format: ## Format project code
 install: ## Install docker + deps
 	$(DOCKER_COMPOSE) build
 	$(DOCKER_COMPOSE_EXEC) "npm install --no-progress"
+
+connect-backend: ## Connect to backend server
+	$(DOCKER_COMPOSE) run --rm backend bash
 
 build: ## Build project for production use
 	$(DOCKER_COMPOSE_EXEC) "rm -rf dist && mkdir dist"

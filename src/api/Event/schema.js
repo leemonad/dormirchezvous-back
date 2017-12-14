@@ -10,8 +10,13 @@ const EventSchema = `
         ads: [Ad]
     }
 
+    type EventPage {
+        items: [Event]
+        totalCount: Int
+    }
+
     extend type Query {
-        Events(open: Boolean): [Event]
+        EventPage(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: String): EventPage
         Event(id: Int!): Event
     }
 
