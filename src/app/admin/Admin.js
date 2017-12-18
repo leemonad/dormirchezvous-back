@@ -4,7 +4,8 @@ import { Admin as AorAdmin, Resource } from 'admin-on-rest';
 import { Delete } from 'admin-on-rest/lib/mui';
 
 import buildApolloClient from './buildApolloClient';
-import EventsList from './Events/EventsList';
+import EventList from './Events/EventList';
+import EventCreate from './Events/EventCreate';
 
 class Admin extends Component {
     constructor() {
@@ -31,10 +32,10 @@ class Admin extends Component {
         return (
             <AorAdmin restClient={restClient}>
                 <Resource
-                    name="Events"
-                    list={EventsList}
+                    name="Event"
+                    list={EventList}
                     edit={undefined}
-                    create={undefined}
+                    create={EventCreate}
                     remove={Delete}
                 />
             </AorAdmin>

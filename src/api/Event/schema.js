@@ -16,8 +16,8 @@ const EventSchema = `
     }
 
     extend type Query {
-        EventPage(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: String): EventPage
-        Event(id: Int!): Event
+        getPageOfEvents(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: String): EventPage
+        getEvent(id: Int!): Event
     }
 
     input EventInput {

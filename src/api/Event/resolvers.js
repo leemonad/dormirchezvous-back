@@ -2,21 +2,21 @@ import DataLoader from 'dataloader';
 import { Op } from 'sequelize';
 
 export const Query = {
-  EventPage: (_, { /* Handle pagination ... here */ }, { connector }) => (
-    connector.Event.findAndCountAll({
-        offset: 0,
-        limit: 10,
-    })
-    .then(({ count, rows }) => ({
+  getPageOfEvents: (_, { page, perPage, sortField, sortOrder, /* filter */ }, { connector }) => {
+    const parameters = {
+      offset: page * perPage,
+      limit: perPage,
+      order: sortField && [[sortField, sortOrder]],
+    };
+    
+    return connector.Event.findAndCountAll(parameters).then(({ count, rows }) => ({
       items: rows,
       totalCount: count,
-    }))
-  ),
+    }));
+  },
 
-  Event: (_, { id }, { connector }) =>
-    connector.Event.find({
-      where: { id },
-    }),
+  getEvent: (_, { id }, { connector }) =>
+    connector.Event.find({ where: { id } }),
 };
 
 export const Mutation = {

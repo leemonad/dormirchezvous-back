@@ -6,7 +6,7 @@ import {
     TextField,
 } from 'admin-on-rest';
 
-export const EventsList = props => (
+export const EventList = props => (
     <List {...props}>
         <Datagrid bodyOptions={{ stripedRows: true, showRowHover: true }}>
             <TextField source="id" label="Id" />
@@ -16,4 +16,4 @@ export const EventsList = props => (
     </List>
 );
 
-export default EventsList;
+export default EventList;
