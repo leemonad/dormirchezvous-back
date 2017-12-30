@@ -1,4 +1,7 @@
-import { Query as AdQuery, Mutation as AdMutation } from './Ad/resolvers';
+import {
+  Query as AdQuery,
+  Mutation as AdMutation,
+} from './Ad/resolvers';
 
 import {
   Event,

@@ -1,17 +1,11 @@
 import React from 'react';
+import { Create } from 'admin-on-rest';
 
-import {
-    Create,
-    SimpleForm,
-    TextInput,
-} from 'admin-on-rest';
+import EventForm from './EventForm';
 
 export const EventCreate = props => (
-    <Create {...props}>
-        <SimpleForm>
-            <TextInput source="title" validation={{ required: true }} />
-            <TextInput source="description" validation={{ required: true }} />
-        </SimpleForm>
+    <Create {...props} title="Créer un événement">
+        <EventForm {...props} />
     </Create>
 );
 

@@ -20,13 +20,16 @@ export const Query = {
 };
 
 export const Mutation = {
-  createEvent: (_, { input }, { connector }) => connector.Event.create(input),
+  createEvent: (_, { data }, { connector }) => connector.Event.create(
+    JSON.parse(data)
+  ),
 
-  updateEvent: async (_, { id, input }, { connector }) => {
-    await connector.Event.update(input, { where: { id } });
+  updateEvent: async (_, { data }, { connector }) => {
+    const event = JSON.parse(data);
+    await connector.Event.update(event, { where: { id: event.id } });
 
     return connector.Event.find({
-      where: { id },
+      where: { id: event.id },
     });
   },
 

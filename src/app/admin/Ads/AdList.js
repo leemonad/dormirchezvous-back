@@ -7,8 +7,8 @@ import {
     EditButton,
 } from 'admin-on-rest';
 
-export const EventList = props => (
-    <List {...props} title="Liste d'événements">
+export const AdList = props => (
+    <List {...props} title="Liste des annonces">
         <Datagrid bodyOptions={{ stripedRows: true, showRowHover: true }}>
             <TextField source="id" label="Id" />
             <TextField source="title" label="Title" />
@@ -18,4 +18,4 @@ export const EventList = props => (
     </List>
 );
 
-export default EventList;
+export default AdList;
