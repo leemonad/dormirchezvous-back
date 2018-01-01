@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Admin from './admin/Admin';
-
 ReactDOM.render(
-    <Admin />,
+    <div>FRONT</div>,
     document.getElementById('root'),
 );
