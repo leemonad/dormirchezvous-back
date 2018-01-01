@@ -2,31 +2,34 @@ import DataLoader from 'dataloader';
 import { Op } from 'sequelize';
 
 export const Query = {
-  EventPage: (_, { /* Handle pagination ... here */ }, { connector }) => (
-    connector.Event.findAndCountAll({
-        offset: 0,
-        limit: 10,
-    })
-    .then(({ count, rows }) => ({
+  getPageOfEvents: (_, { page, perPage, sortField, sortOrder, /* filter */ }, { connector }) => {
+    const parameters = {
+      offset: page * perPage,
+      limit: perPage,
+      order: sortField && [[sortField, sortOrder]],
+    };
+    
+    return connector.Event.findAndCountAll(parameters).then(({ count, rows }) => ({
       items: rows,
       totalCount: count,
-    }))
-  ),
+    }));
+  },
 
-  Event: (_, { id }, { connector }) =>
-    connector.Event.find({
-      where: { id },
-    }),
+  getEvent: (_, { id }, { connector }) =>
+    connector.Event.find({ where: { id } }),
 };
 
 export const Mutation = {
-  createEvent: (_, { input }, { connector }) => connector.Event.create(input),
+  createEvent: (_, { data }, { connector }) => connector.Event.create(
+    JSON.parse(data)
+  ),
 
-  updateEvent: async (_, { id, input }, { connector }) => {
-    await connector.Event.update(input, { where: { id } });
+  updateEvent: async (_, { data }, { connector }) => {
+    const event = JSON.parse(data);
+    await connector.Event.update(event, { where: { id: event.id } });
 
     return connector.Event.find({
-      where: { id },
+      where: { id: event.id },
     });
   },
 

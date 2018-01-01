@@ -3,7 +3,7 @@ import AdSchema from '../Ad/schema';
 
 const EventSchema = `
     type Event {
-        id: Int!
+        id: ID
         title: String!
         description: String!
         open: Boolean
@@ -16,20 +16,14 @@ const EventSchema = `
     }
 
     extend type Query {
-        EventPage(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: String): EventPage
-        Event(id: Int!): Event
-    }
-
-    input EventInput {
-        title: String!
-        description: String!
-        open: Boolean!
+        getPageOfEvents(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: String): EventPage
+        getEvent(id: ID!): Event
     }
 
     extend type Mutation {
-        createEvent(input: EventInput!): Event
-        updateEvent(id: Int!, input: EventInput!): Event
-        deleteEvent(id: Int!): Boolean
+        createEvent(data: String!): Event
+        updateEvent(data: String!): Event
+        deleteEvent(id: ID!): Boolean
     }
 `;
 

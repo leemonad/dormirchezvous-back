@@ -1,19 +1,32 @@
 export const Query = {
-  Ads: (_, where, { connector }) => connector.Ad.find({ where }),
-  Ad: (_, { id }, { connector }) => connector.Ad.find({ where: { id } }),
+  getPageOfAds: (_, { page, perPage, sortField, sortOrder, /* filter */ }, { connector }) => {
+    const parameters = {
+      offset: page * perPage,
+      limit: perPage,
+      order: sortField && [[sortField, sortOrder]],
+    };
+    
+    return connector.Ad.findAndCountAll(parameters).then(({ count, rows }) => ({
+      items: rows,
+      totalCount: count,
+    }));
+  },
+
+  getAd: (_, { id }, { connector }) => connector.Ad.find({ where: { id } }),
 };
 
 export const Mutation = {
-  createAd: (_, { eventId, input }, { connector }) =>
+  createAd: (_, { data }, { connector }) =>
     connector.Ad.create({
-      ...input,
-      eventId,
+      ...JSON.parse(data),
       //userId: 10, // TODO, use real value (req.user.id)
     }),
 
-  updateAd: async (_, { id, input }, { connector }) => {
-    await connector.Ad.update(input, { where: { id } });
-    return connector.Ad.find({ where: { id } });
+  updateAd: async (_, { data }, { connector }) => {
+    const ad = JSON.parse(data);
+    await connector.Ad.update(ad, { where: { id: ad.id } });
+
+    return connector.Ad.find({ where: { id: ad.id } });
   },
 
   deleteAd: async (_, { id }, { connector }) => {

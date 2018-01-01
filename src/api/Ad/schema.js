@@ -2,27 +2,26 @@ import { BaseSchema } from '../schema';
 
 const AdSchema = `
     type Ad {
-        id: Int
+        id: ID
         title: String
         description: String
         availableSpots: Int
     }
 
-    extend type Query {
-        Ads(eventId: Int!, userId: Int): [Ad]
-        Ad(id: Int!): Ad
+    type AdPage {
+        items: [Ad]
+        totalCount: Int
     }
 
-    input AdInput {
-        title: String!
-        description: String!
-        availableSpots: Int
+    extend type Query {
+        getPageOfAds(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: String): AdPage
+        getAd(id: ID!): Ad
     }
 
     extend type Mutation {
-        createAd(input: AdInput!, eventId: Int!): Ad
-        updateAd(id: Int!, input: AdInput!): Ad
-        deleteAd(id: Int!): Boolean
+        createAd(data: String!): Ad
+        updateAd(data: String!): Ad
+        deleteAd(id: ID!): Boolean
     }
 `;
 

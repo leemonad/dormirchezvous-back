@@ -1,19 +1,21 @@
 import React from 'react';
 
 import {
-    Datagrid,
     List,
+    Datagrid,
     TextField,
+    EditButton,
 } from 'admin-on-rest';
 
-export const EventsList = props => (
-    <List {...props}>
+export const AdList = props => (
+    <List {...props} title="Liste des annonces">
         <Datagrid bodyOptions={{ stripedRows: true, showRowHover: true }}>
             <TextField source="id" label="Id" />
             <TextField source="title" label="Title" />
             <TextField source="description" label="Description" />
+            <EditButton />
         </Datagrid>
     </List>
 );
 
-export default EventsList;
+export default AdList;
