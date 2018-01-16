@@ -5,8 +5,9 @@
   "description": "Projet de mise en relation",
   "main": "src/server.js",
   "scripts": {
-    "build-backend": "babel -d ./dist/server ./src -s --ignore 'app'",
-    "start-backend": "nodemon  --exec \"node -r dotenv/config -r babel-register src/index.js\"",
+    "setup-backend": "node -r dotenv/config -r babel-register ./src/api/setup.js",
+    "build-backend": "babel -d ./dist/server ./src/api",
+    "start-backend": "npm run setup-backend && nodemon --exec \"node -r dotenv/config -r babel-register src/index.js\"",
     "build-frontend": "NODE_ENV=production webpack -p --config webpack.config.js --progress",
     "start-frontend": "webpack",
     "format": "prettier {src,config}/{*.js,**/*.js} --write --trailing-comma all --single-quote"
@@ -37,6 +38,7 @@
     "passport": "^0.4.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2",
     "sequelize": "^4.22.7",
     "webpack": "^3.10.0",
     "webpack-dev-middleware": "^1.12.2"

@@ -10,19 +10,19 @@ import apiRouter from './api/router';
 const compiler = webpack(webpackConfig);
 const server = express();
 
-server.use('/api', apiRouter);
-
 server.use(webpackDevMiddleware(compiler, {
-    hot: true,
-    publicPath: '/',
+  hot: true,
+  publicPath: '/',
 }));
 
-server.use(express.static(__dirname + '/app'));
+server.use('/api', apiRouter);
+server.use('/admin', express.static(__dirname + '/admin'));
+server.use('*', express.static(__dirname + '/front'));
 
 const port = process.env.PORT || 3000;
 
 connector
-  .sync()
+  .authenticate() // Test Database connection
   .then(() => {
     server.listen(port, () => {
       console.log('Listening on port', port);

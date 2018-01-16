@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const staticPath = path.join(__dirname, 'dist', 'static');
 
 module.exports = {
-    context: path.join(__dirname, 'src', 'app'),
+    context: path.join(__dirname, 'src'),
     entry: {
         admin: './admin/index.js',
         front: './front/index.js',
@@ -28,12 +28,13 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.join(__dirname, 'src', 'app', 'admin', 'index.html'),
+            inject: false,
+            template: path.join(__dirname, 'src', 'admin', 'index.html'),
             filename: path.join(staticPath, 'admin', 'index.html'),
             chunks: ['admin'],
         }),
         new HtmlWebpackPlugin({
-            template: path.join(__dirname, 'src', 'app', 'front', 'index.html'),
+            template: path.join(__dirname, 'src', 'front', 'index.html'),
             filename: path.join(staticPath, 'index.html'),
             chunks: ['front'],
         })
